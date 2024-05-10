@@ -1,0 +1,18 @@
+services:
+  parking-booking-service:
+    container_name: parking-booking-service
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - parking-booking-database
+
+  parking-booking-database:
+    container_name: parking-booking-database
+    image: postgres:latest
+    environment:
+      - DB_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
