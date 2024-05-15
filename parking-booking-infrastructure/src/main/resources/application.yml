@@ -2,9 +2,9 @@ spring:
   jpa:
     open-in-view: false
   datasource:
-    url: jdbc:postgresql://parking-booking-database:5432/postgres?currentSchema=account&stringtype=unspecified
+    url: jdbc:postgresql://parking-booking-database:5432/postgres?currentSchema=booking&stringtype=unspecified
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
   flyway:
-    default-schema: parking-booking
+    default-schema: booking

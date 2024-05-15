@@ -12,6 +12,12 @@ Now the communication between these two parts can happen through Port and Adapte
 
 ![img.png](img.png)
 
+The service consists of two modules: Application and Infrastructure.
+
+Application module contains business logic (use cases and domain entities). This module is framework/technology-agnostic.
+
+Infrastructure contains all the adapters, configuration and technology specific implementations.
+
 ## Security
 
 
