@@ -14,7 +14,7 @@ create table booking.bookings
 create table booking.booking_items
 (
     start_date_time timestamp with time zone not null,
-    vehicle_number  varchar(8)               not null,
+    vehicle_number  varchar(7)               not null,
     booking_id      uuid                     not null,
     constraint booking_items_pkey primary key (start_date_time, vehicle_number),
     constraint bookings_fk foreign key (booking_id) references bookings (id) on delete cascade

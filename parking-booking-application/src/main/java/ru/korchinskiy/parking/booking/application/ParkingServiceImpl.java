@@ -22,9 +22,9 @@ public class ParkingServiceImpl implements ParkingService {
 
     @Override
     @UseCase(readOnly = true)
-    public List<Parking> findParkingsByCoordinates(Coordinates leftUp, Coordinates rightDown) {
+    public List<Parking> findParkingsByCoordinates(Coordinates leftTop, Coordinates rightBottom) {
         return parkingRepository.findParkingsByCoordinates(
-                leftUp.getX(), rightDown.getX(), rightDown.getY(), leftUp.getY());
+                leftTop.getX(), rightBottom.getX(), rightBottom.getY(), leftTop.getY());
     }
 
     @Override

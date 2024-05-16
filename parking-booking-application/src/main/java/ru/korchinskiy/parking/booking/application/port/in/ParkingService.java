@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface ParkingService {
 
-    List<Parking> findParkingsByCoordinates(Coordinates leftUp, Coordinates rightDown);
+    List<Parking> findParkingsByCoordinates(Coordinates leftTop, Coordinates rightBottom);
 
     Parking getParkingById(UUID parkingId);
 }

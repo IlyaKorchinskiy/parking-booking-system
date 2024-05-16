@@ -1,0 +1,465 @@
+openapi: 3.0.1
+info:
+  title: Parking Booking System API
+  version: '1.0.0'
+servers:
+  - description: Local Server
+    url: 'http://localhost:8080'
+security:
+  - bearerAuth: [ ]
+paths:
+  /bookings:
+    get:
+      tags:
+        - Booking
+      operationId: findBookings
+      summary: Find bookings by parameters
+      description: This API operation is to find bookings by parameters.
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      responses:
+        '200':
+          description: Request is successful.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookingDto'
+              example:
+                [
+                  {
+                    "bookingId": "428976a4-c74e-44cd-ae20-4512c92a1f8e",
+                    "parkingId": "10ac4bab-766f-4c23-90ab-b01ae6961fd9",
+                    "bookingItems": [
+                      {
+                        "startDateTime": "2024-05-17T16:00:00Z",
+                        "vehicleNumber": "1234ABC"
+                      }
+                    ]
+                  },
+                  {
+                    "bookingId": "428976a4-c74e-44cd-ae20-4512c92a1f8e",
+                    "parkingId": "10ac4bab-766f-4c23-90ab-b01ae6961fd9",
+                    "bookingItems": [
+                      {
+                        "startDateTime": "2024-05-18T16:00:00Z",
+                        "vehicleNumber": "1234ABC"
+                      }
+                    ]
+                  }
+                ]
+        '400':
+          $ref: '#/components/responses/400.BadRequest'
+        '401':
+          $ref: '#/components/responses/401.Unauthorized'
+        '403':
+          $ref: '#/components/responses/403.Forbidden'
+        '500':
+          $ref: '#/components/responses/500.InternalServerError'
+        '503':
+          $ref: '#/components/responses/503.ServiceUnavailable'
+    post:
+      tags:
+        - Booking
+      operationId: createBooking
+      summary: Create booking
+      description: This API operation is to create booking for user.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingDto'
+            example:
+              {
+                "parkingId": "10ac4bab-766f-4c23-90ab-b01ae6961fd9",
+                "bookingItems": [
+                  {
+                    "startDateTime": "2024-05-17T16:00:00Z",
+                    "vehicleNumber": "1234ABC"
+                  }
+                ]
+              }
+        required: true
+      responses:
+        '201':
+          description: Booking is created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDtoRef'
+              example:
+                {
+                  "bookingId": "428976a4-c74e-44cd-ae20-4512c92a1f8e",
+                }
+        '400':
+          $ref: '#/components/responses/400.BadRequest'
+        '401':
+          $ref: '#/components/responses/401.Unauthorized'
+        '403':
+          $ref: '#/components/responses/403.Forbidden'
+        '415':
+          $ref: '#/components/responses/415.UnsupportedMediaType'
+        '500':
+          $ref: '#/components/responses/500.InternalServerError'
+        '503':
+          $ref: '#/components/responses/503.ServiceUnavailable'
+  /booking/{id}:
+    get:
+      tags:
+        - Booking
+      operationId: getBookingById
+      summary: Get booking by id
+      description: This API operation is to get booking by id.
+      parameters:
+        - $ref: '#/components/parameters/bookingId'
+      responses:
+        '200':
+          description: Booking is found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDto'
+              example:
+                {
+                  "bookingId": "428976a4-c74e-44cd-ae20-4512c92a1f8e",
+                  "parkingId": "10ac4bab-766f-4c23-90ab-b01ae6961fd9",
+                  "bookingItems": [
+                    {
+                      "startDateTime": "2024-05-17T16:00:00Z",
+                      "vehicleNumber": "1234ABC"
+                    }
+                  ]
+                }
+        '400':
+          $ref: '#/components/responses/400.BadRequest'
+        '401':
+          $ref: '#/components/responses/401.Unauthorized'
+        '403':
+          $ref: '#/components/responses/403.Forbidden'
+        '404':
+          $ref: '#/components/responses/404.NotFound'
+        '500':
+          $ref: '#/components/responses/500.InternalServerError'
+        '503':
+          $ref: '#/components/responses/503.ServiceUnavailable'
+  /parkings:
+    get:
+      tags:
+        - Parking
+      operationId: findParkings
+      summary: Find parkings by parameters
+      description: This API operation is to find parkings by parameters.
+      parameters:
+        - $ref: '#/components/parameters/coordinateX1'
+        - $ref: '#/components/parameters/coordinateX2'
+        - $ref: '#/components/parameters/coordinateY1'
+        - $ref: '#/components/parameters/coordinateY2'
+      responses:
+        '200':
+          description: Request is successful.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ParkingDto'
+              example:
+                [
+                  {
+                    "parkingId": "10ac4bab-766f-4c23-90ab-b01ae6961fd9",
+                    "address": "C. Chavia, 1, 33008 Oviedo, Asturias",
+                    "totalPlaces": 24,
+                    "coordinates": {
+                      "x": 43.360747,
+                      "y": -5.836202
+                    },
+                    "timeToAvailableSlots": [
+                      {
+                        "startDateTime": "2024-05-17T16:00:00Z",
+                        "available": 20
+                      },
+                      {
+                        "startDateTime": "2024-05-18T16:00:00Z",
+                        "available": 15
+                      }
+                    ]
+                  },
+                  {
+                    "parkingId": "ce952f14-a3ba-4718-a31a-b9b24c77e00f",
+                    "address": "Av. Torrelavega, 11, 33010 Oviedo, Asturias",
+                    "totalPlaces": 30,
+                    "coordinates": {
+                      "x": 43.363695,
+                      "y": -5.837892
+                    },
+                    "timeToAvailableSlots": [
+                      {
+                        "startDateTime": "2024-05-17T16:00:00Z",
+                        "available": 20
+                      },
+                      {
+                        "startDateTime": "2024-05-18T16:00:00Z",
+                        "available": 15
+                      }
+                    ]
+                  }
+                ]
+        '400':
+          $ref: '#/components/responses/400.BadRequest'
+        '401':
+          $ref: '#/components/responses/401.Unauthorized'
+        '403':
+          $ref: '#/components/responses/403.Forbidden'
+        '500':
+          $ref: '#/components/responses/500.InternalServerError'
+        '503':
+          $ref: '#/components/responses/503.ServiceUnavailable'
+  /parkings/{id}:
+    get:
+      tags:
+        - Parking
+      operationId: getParkingById
+      summary: Get parking by id
+      description: This API operation is to get parking by id.
+      parameters:
+        - $ref: '#/components/parameters/parkingId'
+      responses:
+        '200':
+          description: Parking is found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParkingDto'
+              example:
+                {
+                  "parkingId": "10ac4bab-766f-4c23-90ab-b01ae6961fd9",
+                  "address": "C. Chavia, 1, 33008 Oviedo, Asturias",
+                  "totalPlaces": 24,
+                  "coordinates": {
+                    "x": 43.360747,
+                    "y": -5.836202
+                  },
+                  "timeToAvailableSlots": [
+                    {
+                      "startDateTime": "2024-05-17T16:00:00Z",
+                      "available": 20
+                    },
+                    {
+                      "startDateTime": "2024-05-18T16:00:00Z",
+                      "available": 15
+                    }
+                  ]
+                }
+        '400':
+          $ref: '#/components/responses/400.BadRequest'
+        '401':
+          $ref: '#/components/responses/401.Unauthorized'
+        '403':
+          $ref: '#/components/responses/403.Forbidden'
+        '404':
+          $ref: '#/components/responses/404.NotFound'
+        '500':
+          $ref: '#/components/responses/500.InternalServerError'
+        '503':
+          $ref: '#/components/responses/503.ServiceUnavailable'
+components:
+  schemas:
+    BookingDto:
+      type: object
+      properties:
+        bookingId:
+          type: string
+          format: uuid
+          readOnly: true
+        parkingId:
+          type: string
+          format: uuid
+        bookingItems:
+          type: array
+          items:
+            type: object
+            properties:
+              startDateTime:
+                type: string
+                format: date-time
+              vehicleNumber:
+                type: string
+                maxLength: 7
+            required:
+              - startDateTime
+              - vehicleNumber
+      required:
+        - parkingId
+        - bookingItems
+    BookingDtoRef:
+      type: object
+      properties:
+        bookingId:
+          type: string
+          format: uuid
+      required:
+        - bookingId
+    ParkingDto:
+      type: object
+      properties:
+        parkingId:
+          type: string
+          format: uuid
+          readOnly: true
+        address:
+          type: string
+          maxLength: 50
+        totalPlaces:
+          type: integer
+        coordinates:
+          type: object
+          properties:
+            x:
+              type: number
+              format: double
+            y:
+              type: number
+              format: double
+          required:
+            - x
+            - y
+        timeToAvailableSlots:
+          type: array
+          items:
+            type: object
+            properties:
+              startDateTime:
+                type: string
+                format: date-time
+              available:
+                type: integer
+            required:
+              - startDateTime
+              - available
+      required:
+        - parkingId
+        - address
+        - totalPlaces
+        - coordinates
+        - timeToAvailableSlots
+    ErrorResponseDto:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        description:
+          type: string
+      required:
+        - description
+  parameters:
+    bookingId:
+      name: id
+      in: path
+      description: Booking identifier.
+      schema:
+        type: string
+        format: uuid
+      required: true
+    coordinateX1:
+      name: x1
+      in: query
+      description: Coordinate x1.
+      schema:
+        type: number
+        format: double
+      required: true
+    coordinateX2:
+      name: x2
+      in: query
+      description: Coordinate x2.
+      schema:
+        type: number
+        format: double
+      required: true
+    coordinateY1:
+      name: y1
+      in: query
+      description: Coordinate y1.
+      schema:
+        type: number
+        format: double
+      required: true
+    coordinateY2:
+      name: y2
+      in: query
+      description: Coordinate y2.
+      schema:
+        type: number
+        format: double
+      required: true
+    parkingId:
+      name: id
+      in: path
+      description: Parking identifier.
+      schema:
+        type: string
+        format: uuid
+      required: true
+    userId:
+      name: userId
+      in: query
+      description: User identifier.
+      schema:
+        type: string
+        format: uuid
+      required: true
+  responses:
+    400.BadRequest:
+      description: Bad Request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseDto'
+    401.Unauthorized:
+      description: Unauthorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseDto'
+    403.Forbidden:
+      description: Forbidden.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseDto'
+    404.NotFound:
+      description: Not Found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseDto'
+    409.Conflict:
+      description: Conflict.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseDto'
+    415.UnsupportedMediaType:
+      description: Unsupported Media Type.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseDto'
+    500.InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseDto'
+    503.ServiceUnavailable:
+      description: Service Unavailable.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseDto'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
