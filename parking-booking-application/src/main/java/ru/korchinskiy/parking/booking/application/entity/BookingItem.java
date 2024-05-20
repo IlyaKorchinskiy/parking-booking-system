@@ -16,6 +16,9 @@ public class BookingItem {
     }
 
     public void validate() {
+        if (startDateTime.isBefore(OffsetDateTime.now())) {
+            throw new BusinessValidationException("Start time of booking is before current time.");
+        }
         if (startDateTime.getMinute() != 0 || startDateTime.getSecond() != 0) {
             throw new BusinessValidationException("Start time of booking is not correct.");
         }

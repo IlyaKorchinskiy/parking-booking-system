@@ -26,6 +26,8 @@ public class BookingJpaMapper {
     public BookingEntity bookingToBookingEntity(Booking booking) {
         return BookingEntity.builder()
                 .id(booking.getId())
+                .parkingId(booking.getParkingId())
+                .userId(booking.getUserId())
                 .bookingItems(booking.getBookingItems().stream()
                         .map(bookingItem -> new BookingItemEntity(
                                 bookingItem.getStartDateTime(), bookingItem.getVehicleNumber(), booking.getId()))

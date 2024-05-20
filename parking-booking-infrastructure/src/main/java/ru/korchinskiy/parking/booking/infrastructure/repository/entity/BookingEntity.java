@@ -1,5 +1,6 @@
 package ru.korchinskiy.parking.booking.infrastructure.repository.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -33,7 +34,7 @@ public class BookingEntity {
     @Column(name = "user_id")
     private UUID userId;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "booking_id")
     private Set<BookingItemEntity> bookingItems;
 }
