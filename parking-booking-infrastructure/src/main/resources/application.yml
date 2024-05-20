@@ -8,3 +8,8 @@ spring:
     driver-class-name: org.postgresql.Driver
   flyway:
     default-schema: booking
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloack:8180/realms/parking

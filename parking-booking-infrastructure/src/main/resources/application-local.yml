@@ -1,3 +1,9 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=booking&stringtype=unspecified
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/parking
+          jwk-set-uri: http://localhost:8180/realms/parking/protocol/openid-connect/certs
