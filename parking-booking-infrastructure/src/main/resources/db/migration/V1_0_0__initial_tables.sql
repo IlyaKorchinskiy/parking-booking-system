@@ -11,6 +11,8 @@ create table booking.bookings
     constraint bookings_pkey primary key (id)
 );
 
+create index if not exists user_id_idx on booking.bookings (user_id);
+
 create table booking.booking_items
 (
     start_date_time timestamp with time zone not null,

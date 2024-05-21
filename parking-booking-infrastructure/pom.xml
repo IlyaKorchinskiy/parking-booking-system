@@ -89,8 +89,8 @@
                                 ${project.basedir}/src/main/resources/openapi/parking-booking_openapi.yaml
                             </inputSpec>
                             <generatorName>spring</generatorName>
-                            <apiPackage>openapi.api</apiPackage>
-                            <modelPackage>openapi.model</modelPackage>
+                            <apiPackage>ru.korchinskiy.parking.booking.infrastructure.openapi.api</apiPackage>
+                            <modelPackage>ru.korchinskiy.parking.booking.infrastructure.openapi.model</modelPackage>
                             <library>spring-boot</library>
                             <skipValidateSpec>false</skipValidateSpec>
                             <configOptions>
