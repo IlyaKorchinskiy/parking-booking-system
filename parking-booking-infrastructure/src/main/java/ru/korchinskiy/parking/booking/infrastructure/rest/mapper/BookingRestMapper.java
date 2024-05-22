@@ -17,7 +17,8 @@ public class BookingRestMapper {
                 .userId(userId)
                 .parkingId(bookingDto.getParkingId())
                 .bookingItems(bookingDto.getBookingItems().stream()
-                        .map(itemDto -> new BookingItem(itemDto.getStartDateTime(), itemDto.getVehicleNumber()))
+                        .map(itemDto ->
+                                new BookingItem(itemDto.getStartDateTime().withNano(0), itemDto.getVehicleNumber()))
                         .collect(Collectors.toSet()))
                 .build();
     }

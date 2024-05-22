@@ -17,6 +17,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -28,7 +29,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class BookingServiceImplTest {
+class BookingServiceImplTest extends CommonTest {
 
     @Mock
     private BookingRepository bookingRepository;
@@ -39,24 +40,30 @@ class BookingServiceImplTest {
     @InjectMocks
     private BookingServiceImpl bookingService;
 
-    private static final String PARKING_ID = "9ad24d2f-ca4f-4a5e-b39a-15a64ff37016";
-    private static final String USER_ID = "210a4bf0-2e89-44ba-a193-cbefa50a5ff3";
-
     @Test
     void bookParking_Success() {
         Booking booking = Booking.builder()
-                .parkingId(UUID.fromString(PARKING_ID))
+                .parkingId(UUID.fromString(PARKING_ID_1))
                 .userId(UUID.fromString(USER_ID))
-                .bookingItems(new HashSet<>(Set.of(
-                        new BookingItem(OffsetDateTime.of(2024, 5, 21, 16, 0, 0, 0, ZoneOffset.UTC), "1234ABC"))))
+                .bookingItems(new HashSet<>(Set.of(new BookingItem(
+                        OffsetDateTime.now()
+                                .withMinute(0)
+                                .withSecond(0)
+                                .withNano(0)
+                                .plusDays(1),
+                        "1234ABC"))))
                 .build();
         Parking parking = Parking.builder()
-                .id(UUID.fromString(PARKING_ID))
+                .id(UUID.fromString(PARKING_ID_1))
                 .totalPlaces(20)
                 .address("Some address")
                 .coordinates(new Coordinates(BigDecimal.valueOf(43.365895), BigDecimal.valueOf(-5.856932)))
                 .timeToAvailableSlots(new HashMap<>(Map.of(
-                        OffsetDateTime.of(2024, 5, 21, 16, 0, 0, 0, ZoneOffset.UTC),
+                        OffsetDateTime.now()
+                                .withMinute(0)
+                                .withSecond(0)
+                                .withNano(0)
+                                .plusDays(1),
                         18,
                         OffsetDateTime.of(2024, 5, 21, 17, 0, 0, 0, ZoneOffset.UTC),
                         19)))
@@ -68,14 +75,58 @@ class BookingServiceImplTest {
 
         assertNotNull(uuid);
         assertEquals(
-                17, parking.getTimeToAvailableSlots().get(OffsetDateTime.of(2024, 5, 21, 16, 0, 0, 0, ZoneOffset.UTC)));
+                17,
+                parking.getTimeToAvailableSlots()
+                        .get(OffsetDateTime.now()
+                                .withMinute(0)
+                                .withSecond(0)
+                                .withNano(0)
+                                .plusDays(1)));
         verify(parkingRepository).save(parking);
         verify(bookingRepository).save(booking);
     }
 
     @Test
-    void getBookingById() {}
+    void getBookingById() {
+        Booking booking = Booking.builder()
+                .parkingId(UUID.fromString(PARKING_ID_1))
+                .userId(UUID.fromString(USER_ID))
+                .id(UUID.fromString(BOOKING_ID_1))
+                .bookingItems(new HashSet<>(Set.of(
+                        new BookingItem(OffsetDateTime.of(2024, 5, 21, 16, 0, 0, 0, ZoneOffset.UTC), "1234ABC"))))
+                .build();
+
+        when(bookingRepository.getById(UUID.fromString(BOOKING_ID_1))).thenReturn(Optional.of(booking));
+
+        Booking actual = bookingService.getBookingById(UUID.fromString(BOOKING_ID_1));
+
+        assertEquals(booking, actual);
+    }
 
     @Test
-    void findUserBookings() {}
+    void findUserBookings() {
+        List<Booking> bookings = List.of(
+                Booking.builder()
+                        .parkingId(UUID.fromString(PARKING_ID_1))
+                        .userId(UUID.fromString(USER_ID))
+                        .id(UUID.fromString(BOOKING_ID_1))
+                        .bookingItems(new HashSet<>(Set.of(new BookingItem(
+                                OffsetDateTime.of(2024, 5, 21, 16, 0, 0, 0, ZoneOffset.UTC), "1234ABC"))))
+                        .build(),
+                Booking.builder()
+                        .parkingId(UUID.fromString(PARKING_ID_2))
+                        .userId(UUID.fromString(USER_ID))
+                        .id(UUID.fromString(BOOKING_ID_2))
+                        .bookingItems(new HashSet<>(Set.of(
+                                new BookingItem(OffsetDateTime.of(2024, 5, 22, 12, 0, 0, 0, ZoneOffset.UTC), "1234ABC"),
+                                new BookingItem(
+                                        OffsetDateTime.of(2024, 5, 22, 13, 0, 0, 0, ZoneOffset.UTC), "1234ABC"))))
+                        .build());
+
+        when(bookingRepository.findByUserId(UUID.fromString(USER_ID))).thenReturn(bookings);
+
+        List<Booking> actual = bookingService.findUserBookings(UUID.fromString(USER_ID));
+
+        assertEquals(bookings, actual);
+    }
 }
