@@ -1,26 +1,26 @@
 services:
-#  parking-booking-service:
-#    container_name: parking-booking-service
-#    build:
-#      context: .
-#    ports:
-#      - 8080:8080
-#    depends_on:
-#      - parking-booking-database
+  parking-booking-service:
+    container_name: parking-booking-service
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - parking-booking-database
 
   parking-booking-database:
     container_name: parking-booking-database
     image: postgres:latest
+    ports:
+      - 5432:5432
     environment:
       - DB_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    ports:
-      - 5432:5432
 
   keycloak:
     image: quay.io/keycloak/keycloak:latest
     ports:
-      - "8180:8180"
+      - 8180:8180
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: password

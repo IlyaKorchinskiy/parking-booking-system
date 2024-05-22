@@ -1,13 +1,13 @@
 package ru.korchinskiy.parking.booking.infrastructure.rest.controller;
 
 import lombok.RequiredArgsConstructor;
-import openapi.api.ParkingApi;
-import openapi.model.ParkingDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.korchinskiy.parking.booking.application.port.in.ParkingService;
 import ru.korchinskiy.parking.booking.application.valueobject.Coordinates;
+import ru.korchinskiy.parking.booking.infrastructure.openapi.api.ParkingApi;
+import ru.korchinskiy.parking.booking.infrastructure.openapi.model.ParkingDto;
 import ru.korchinskiy.parking.booking.infrastructure.rest.mapper.ParkingRestMapper;
 
 import java.math.BigDecimal;

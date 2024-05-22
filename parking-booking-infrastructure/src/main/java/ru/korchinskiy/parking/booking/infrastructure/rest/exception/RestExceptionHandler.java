@@ -1,7 +1,6 @@
 package ru.korchinskiy.parking.booking.infrastructure.rest.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import openapi.model.ErrorResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.korchinskiy.parking.booking.application.exception.BusinessValidationException;
 import ru.korchinskiy.parking.booking.application.exception.EntityNotFoundException;
+import ru.korchinskiy.parking.booking.infrastructure.openapi.model.ErrorResponseDto;
 
 @Slf4j
 @ControllerAdvice

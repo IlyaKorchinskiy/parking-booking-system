@@ -1,15 +1,15 @@
 package ru.korchinskiy.parking.booking.infrastructure.rest.controller;
 
 import lombok.RequiredArgsConstructor;
-import openapi.api.BookingApi;
-import openapi.model.BookingDto;
-import openapi.model.BookingDtoRef;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.RestController;
 import ru.korchinskiy.parking.booking.application.port.in.BookingService;
+import ru.korchinskiy.parking.booking.infrastructure.openapi.api.BookingApi;
+import ru.korchinskiy.parking.booking.infrastructure.openapi.model.BookingDto;
+import ru.korchinskiy.parking.booking.infrastructure.openapi.model.BookingDtoRef;
 import ru.korchinskiy.parking.booking.infrastructure.rest.mapper.BookingRestMapper;
 
 import java.util.List;

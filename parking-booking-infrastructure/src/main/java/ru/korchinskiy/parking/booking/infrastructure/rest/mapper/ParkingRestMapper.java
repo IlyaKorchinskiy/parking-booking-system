@@ -1,10 +1,10 @@
 package ru.korchinskiy.parking.booking.infrastructure.rest.mapper;
 
-import openapi.model.ParkingDto;
-import openapi.model.ParkingDtoCoordinates;
-import openapi.model.ParkingDtoTimeToAvailableSlotsInner;
 import org.springframework.stereotype.Component;
 import ru.korchinskiy.parking.booking.application.entity.Parking;
+import ru.korchinskiy.parking.booking.infrastructure.openapi.model.ParkingDto;
+import ru.korchinskiy.parking.booking.infrastructure.openapi.model.ParkingDtoCoordinates;
+import ru.korchinskiy.parking.booking.infrastructure.openapi.model.ParkingDtoTimeToAvailableSlotsInner;
 
 import java.util.stream.Collectors;
 

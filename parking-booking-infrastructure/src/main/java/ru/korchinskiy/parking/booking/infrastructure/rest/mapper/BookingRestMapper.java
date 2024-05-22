@@ -1,10 +1,10 @@
 package ru.korchinskiy.parking.booking.infrastructure.rest.mapper;
 
-import openapi.model.BookingDto;
-import openapi.model.BookingDtoBookingItemsInner;
 import org.springframework.stereotype.Component;
 import ru.korchinskiy.parking.booking.application.entity.Booking;
 import ru.korchinskiy.parking.booking.application.entity.BookingItem;
+import ru.korchinskiy.parking.booking.infrastructure.openapi.model.BookingDto;
+import ru.korchinskiy.parking.booking.infrastructure.openapi.model.BookingDtoBookingItemsInner;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
