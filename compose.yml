@@ -18,12 +18,16 @@ services:
       - POSTGRES_PASSWORD=postgres
 
   keycloak:
+    container_name: keycloak
     image: quay.io/keycloak/keycloak:latest
     ports:
       - 8180:8180
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: password
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import
     command:
       - start-dev
       - --http-port=8180
+      - --import-realm
